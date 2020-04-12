@@ -65,7 +65,7 @@ def installOrUpdatePlex(filename):
 
     while True:
         output = process.stdout.readline()
-        print(output.strip)
+        print(output.strip())
         return_code = process.poll()
         if return_code is not None:
             print('Return code: ', return_code)
