@@ -55,7 +55,7 @@ def downloadFile(url,filename):
     if not OS.path.exists('downloads'):
         OS.mkdir('downloads')
     with open('downloads/'+filename, 'wb') as fd:
-        for chunk in response.iter_content():
+        for chunk in response.iter_content(chunk_size=52428800):
             fd.write(chunk)
 
 def installOrUpdatePlex(filename):
@@ -78,8 +78,8 @@ try:
     dictData = getRequestData(url, payload)
     url, filename = getUrlAndFileName(dictData, platform.system(), 'linux-x86_64', 'redhat')
     print("URL: {} \nFilename: {}".format(url, filename))
-
     downloadFile(url,filename)
+    installOrUpdatePlex(filename)
 except Exception as identifier:
     print(identifier)
 
