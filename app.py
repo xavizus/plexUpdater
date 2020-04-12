@@ -45,10 +45,7 @@ def getUrlAndFileName(data, os, build = None, distro = None):
 def downloadFile(url,filename):
     print("Downloading file..")
     path = pathlib.Path().absolute().as_posix() + "/downloads/plexmediaserver-*"
-    print(path)
-    print(glob.glob(path))
     currentDownloadedFiles = [OS.path.basename(x) for x in glob.glob(path)]
-    print(currentDownloadedFiles)
     if filename in currentDownloadedFiles:
         raise Exception('No new files found!')
     response = requests.get(url)
