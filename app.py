@@ -46,6 +46,7 @@ def downloadFile(url,filename):
     print("Downloading file..")
     path = pathlib.Path().absolute().as_posix() + "/downloads/PlexMediaServer-*"
     currentDownloadedFiles = [OS.path.basename(x) for x in glob.glob(path)]
+    print(currentDownloadedFiles)
     if filename in currentDownloadedFiles:
         raise Exception('No new files found!')
     response = requests.get(url)
@@ -58,6 +59,7 @@ def downloadFile(url,filename):
         for chunk in response.iter_content(chunk_size=52428800):
             fd.write(chunk)
 
+# Run commands
 def runCommands(commands: list) ->int:
     process = subprocess.Popen(commands, stdout=subprocess.PIPE,universal_newlines=True)
     while True:
@@ -70,6 +72,7 @@ def runCommands(commands: list) ->int:
                 print(output.strip())
             return return_code
 
+# install or update plex
 def installOrUpdatePlex(filename):
     print("Installing...")
     downloadFolder = pathlib.Path().absolute().as_posix() + "/downloads/" + filename
@@ -90,17 +93,3 @@ try:
     installOrUpdatePlex(filename)
 except Exception as identifier:
     print(identifier)
-
-
-'''
-releases = dictData['computer']['Linux']['releases']
-version = dictData['computer']['Linux']['version']
-filename = 'plexmediaserver-' + version + '.x86_64.rpm'
-url = ''
-for release in releases:
-    if release['build'] == 'linux-x86_64' and release['distro'] == 'redhat':
-        url = release['url']
-        break
-
-print("Url: " + url, "filename: " + filename)
-'''
