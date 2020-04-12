@@ -36,6 +36,9 @@ def getUrlAndFileName(data, os, build = None, distro = None):
                 url = release['url']
                 break
     filename = url[url.rfind("/")+1:]
+
+    if url == '':
+        raise Exception('Did not get download URL!')
     return url, filename
 
 # Download the file
@@ -73,7 +76,7 @@ try:
     payload = {'channel': 'plexpass', '_': '1586692695835'}
     url = 'https://plex.tv/api/downloads/5.json'
     dictData = getRequestData(url, payload)
-    url, filename = getUrlAndFileName(dictData, platform.system())
+    url, filename = getUrlAndFileName(dictData, platform.system(), 'linux-x86_64', 'redhat')
     print("URL: {} \nFilename: {}".format(url, filename))
 
     downloadFile(url,filename)
