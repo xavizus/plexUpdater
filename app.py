@@ -60,7 +60,7 @@ def downloadFile(url,filename):
 
 def installOrUpdatePlex(filename):
     print("Installing...")
-    downloadFolder = pathlib.Path().absolute().as_posix() + "/downloads/"
+    downloadFolder = pathlib.Path().absolute().as_posix() + "/downloads/" + filename
     process = subprocess.Popen(['sudo', 'yum', 'localinstall', downloadFolder, '-y'],stdout=subprocess.PIPE,universal_newlines=True)
 
     while True:
