@@ -44,7 +44,7 @@ def getUrlAndFileName(data, os, build = None, distro = None):
 # Download the file
 def downloadFile(url,filename):
     print("Downloading file..")
-    path = pathlib.Path().absolute().as_posix() + "/downloads/PlexMediaServer-*"
+    path = pathlib.Path().absolute().as_posix() + "/downloads/plexmediaserver-*"
     print(path)
     print(glob.glob(path))
     currentDownloadedFiles = [OS.path.basename(x) for x in glob.glob(path)]
