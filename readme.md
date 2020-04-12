@@ -1,0 +1,1 @@
+# This script installs and update plex media server.
