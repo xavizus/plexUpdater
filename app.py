@@ -58,11 +58,8 @@ def downloadFile(url,filename):
         for chunk in response.iter_content(chunk_size=52428800):
             fd.write(chunk)
 
-def installOrUpdatePlex(filename):
-    print("Installing...")
-    downloadFolder = pathlib.Path().absolute().as_posix() + "/downloads/" + filename
-    process = subprocess.Popen(['sudo', 'yum', 'localinstall', downloadFolder, '-y'],stdout=subprocess.PIPE,universal_newlines=True)
-
+def runCommands(commands: list) ->int:
+    process = subprocess.Popen(commands, stdout=subprocess.PIPE,universal_newlines=True)
     while True:
         output = process.stdout.readline()
         print(output.strip())
@@ -71,7 +68,18 @@ def installOrUpdatePlex(filename):
             print('Return code: ', return_code)
             for output in process.stdout.readlines():
                 print(output.strip())
-            break
+            return return_code
+
+def installOrUpdatePlex(filename):
+    print("Installing...")
+    downloadFolder = pathlib.Path().absolute().as_posix() + "/downloads/" + filename
+    install = runCommands(['sudo', 'yum', 'localinstall', downloadFolder, '-y'])
+    if install != 0:
+        raise Exception('Could not install PlexMediaServer!')
+    
+    print("Starting program...")
+    runCommands(['sudo', 'systemctl', 'start', 'plexmediaserver'])
+    runCommands(['sudo', 'systemctl', 'enable', 'plexmediaserver'])
 try:    
     payload = {'channel': 'plexpass', '_': '1586692695835'}
     url = 'https://plex.tv/api/downloads/5.json'
