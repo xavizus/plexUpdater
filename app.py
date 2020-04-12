@@ -46,6 +46,7 @@ def downloadFile(url,filename):
     print("Downloading file..")
     path = pathlib.Path().absolute().as_posix() + "/downloads/PlexMediaServer-*"
     print(path)
+    print(glob.glob(path))
     currentDownloadedFiles = [OS.path.basename(x) for x in glob.glob(path)]
     print(currentDownloadedFiles)
     if filename in currentDownloadedFiles:
